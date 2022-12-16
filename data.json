@@ -1,0 +1,39 @@
+x = [
+    {   "id": 0,
+        "question": "Microsoft Word is ____ software",
+        "option1": "Application",
+        "otiion22": "Compiler",
+        "option3": "System",
+        "option4": "Programming"
+    },
+    {   "id": 1,
+        "question": "Microsoft Word is ____ software",
+        "option1": "Application",
+        "otiion2": "Compiler",
+        "option3": "System",
+        "option4": "Programming"
+    },
+    {   "id": 2,
+        "question": "Which is not in Ms Word Office",
+        "option1": "Italic",
+        "option2": "Magic Tool",
+        "option3": "Font",
+        "option4": "Bold",
+    },
+    {   "id": 3,
+        "question": "____ Cannot be used to work in Ms Word Office",
+        "option1": "Joystick",
+        "option2": "Scanner",
+        "option3": "Light Pen",
+        "option4": "Mouse",
+        
+    },
+    {
+        "id": 4,
+        "question": "Which is not an adition of MS Word?",
+        "option1": "MS Word 2003",
+        "option2": "MS Word 2007",
+        "option3": "MS Word 2010",
+        "option4": "MS Word 1020",
+    }
+]
