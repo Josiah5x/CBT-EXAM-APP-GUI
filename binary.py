@@ -8,6 +8,8 @@ from PyQt5.QtGui import QPixmap
 from datetime import datetime
 from time import strftime
 import mysql.connector
+import json
+import jsonfile
 import sqlite3
 # from mysql.connector import Error, errorcode
 from PyQt5.QtCore import QObject, Qt, pyqtSignal, QTimer, QTime
@@ -26,7 +28,7 @@ def secs_to_minsec(secs: int):
 
 
 
-class Attendance(QMainWindow):
+class SchoolCBTMain(QMainWindow):
     def __init__(self):
         super().__init__()
         self.top=80 
@@ -44,247 +46,251 @@ class Attendance(QMainWindow):
         # confirmed = input('Search: ')
         cursor = conn.execute("SELECT id, question, option1, option2, option3, option4 FROM gold_concept")
         # for row in cursor:
-        #     self.x = row
+        #     self.questionData = row
         
-        self.x = [
-                {   "id": 0,
-                    "question": "Jumb and go to number",
-                    "option1": "---",
-                    "option2": "----",
-                    "option3": "------",
-                    "option4": "---------",
-                },
-                {   "id": 1,
-                    "question": "Formatting is perform on",
-                    "option1": "Text",
-                    "option2": "Table",
-                    "option3": "Menu",
-                    "option4": "Both (a) and (b)"
-                },
-                {   "id": 2,
-                    "question": "Which is not in Ms Word Office",
-                    "option1": "Italic",
-                    "option2": "Magic Tool",
-                    "option3": "Font",
-                    "option4": "Bold",
-                },
-                {   "id": 3,
-                    "question": "____ Cannot be used to work in Ms Word Office",
-                    "option1": "Joystick",
-                    "option2": "Scanner",
-                    "option3": "Light Pen",
-                    "option4": "Mouse",
+        # self.questionData = [
+        #         {   "id": 0,
+        #             "question": "Jumb and go to number",
+        #             "option1": "---",
+        #             "option2": "----",
+        #             "option3": "------",
+        #             "option4": "---------",
+        #         },
+        #         {   "id": 1,
+        #             "question": "Formatting is perform on",
+        #             "option1": "Text",
+        #             "option2": "Table",
+        #             "option3": "Menu",
+        #             "option4": "Both (a) and (b)"
+        #         },
+        #         {   "id": 2,
+        #             "question": "Which is not in Ms Word Office",
+        #             "option1": "Italic",
+        #             "option2": "Magic Tool",
+        #             "option3": "Font",
+        #             "option4": "Bold",
+        #         },
+        #         {   "id": 3,
+        #             "question": "____ Cannot be used to work in Ms Word Office",
+        #             "option1": "Joystick",
+        #             "option2": "Scanner",
+        #             "option3": "Light Pen",
+        #             "option4": "Mouse",
                     
-                },
-                {
-                    "id": 4,
-                    "question": "Which is not an adition of MS Word?",
-                    "option1": "MS Word 2003",
-                    "option2": "MS Word 2007",
-                    "option3": "MS Word 2010",
-                    "option4": "MS Word 1020",
-                },
-                {   "id": 5,
-                    "question": "Microsoft Word is ____ software",
-                    "option1": "Application",
-                    "option2": "Compiler",
-                    "option3": "System",
-                    "option4": "Programming"
-                },
+        #         },
+        #         {
+        #             "id": 4,
+        #             "question": "Which is not an adition of MS Word?",
+        #             "option1": "MS Word 2003",
+        #             "option2": "MS Word 2007",
+        #             "option3": "MS Word 2010",
+        #             "option4": "MS Word 1020",
+        #         },
+        #         {   "id": 5,
+        #             "question": "Microsoft Word is ____ software",
+        #             "option1": "Application",
+        #             "option2": "Compiler",
+        #             "option3": "System",
+        #             "option4": "Programming"
+        #         },
 
-                {   "id": 6,
-                    "question": "What is the blank space outside the printing command",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 7,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 8,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 9,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 10,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 11,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 12,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
+        #         {   "id": 6,
+        #             "question": "What is the blank space outside the printing command",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 7,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 8,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 9,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 10,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 11,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 12,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
 
-                {   "id": 13,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 14,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 15,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 16,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 17,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 18,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 19,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 20,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 21,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 22,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 23,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 24,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 25,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 26,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 27,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 28,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 29,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 30,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 31,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-                {   "id": 32,
-                    "question": "",
-                    "option1": "",
-                    "option2": "",
-                    "option3": "",
-                    "option4": ""
-                },
-            ]
+        #         {   "id": 13,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 14,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 15,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 16,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 17,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 18,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 19,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 20,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 21,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 22,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 23,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 24,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 25,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 26,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 27,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 28,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 29,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+        #         {   "id": 30,
+        #             "question": "",
+        #             "option1": "",
+        #             "option2": "",
+        #             "option3": "",
+        #             "option4": ""
+        #         },
+                # {   "id": 31,
+                #     "question": "",
+                #     "option1": "",
+                #     "option2": "",
+                #     "option3": "",
+                #     "option4": ""
+                # },
+                # {   "id": 32,
+                #     "question": "",
+                #     "option1": "",
+                #     "option2": "",
+                #     "option3": "",
+                #     "option4": ""
+                # },
+            # ]
 
-        
+        # f = open("data.json")
+        with open("data.json") as f:
+            self.questionData = json.load(f)
+
+        # self.questionData = json.load(f)
 
         self.time_left_int = DURATION_INT
         self.myTimer = QtCore.QTimer(self)
@@ -335,7 +341,7 @@ class Attendance(QMainWindow):
 
         self.startquiz4 = QtWidgets.QPushButton(self.groupprofile)
         self.startquiz4.setGeometry(QtCore.QRect(20, 358, 201, 36))
-        self.startquiz4.setText("webbrowser")
+        self.startquiz4.setText("Web Browser")
         self.startquiz4.setStyleSheet('background: green; color: #fff')
         # self.startquiz.clicked.connect(self.closeReg)
 
@@ -500,8 +506,8 @@ class Attendance(QMainWindow):
 
 
         self.startTimer()
-        # self.answer()
-        self.jsonfile(0)
+        self.answer()
+        # self.jsonfile(0)
         # self.previous_btn()
         
         self.loopbtn()
@@ -512,7 +518,6 @@ class Attendance(QMainWindow):
         self.groupbutton = QGroupBox(self)
         self.groupbutton.setStyleSheet('background: #e8ffe8')
         self.groupbutton.setTitle("Quick Navigation")
-        self.groupbutton
         self.groupbutton.setFont(QtGui.QFont('consola',15,))
         self.groupbutton.setGeometry(260, 500, 1100, 250)
         # self.groupbutton.setStyleSheet('background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.509, y2:0, stop:0 rgba(8, 120, 48, 255), stop:1 rgba(0, 168, 119, 255));; color: #fff;')
@@ -522,18 +527,17 @@ class Attendance(QMainWindow):
 
         
         
-        self.lent= len(self.x)
-
-        self_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
-                 18, 19, 20, 21, 22, 23, 24, 25, 24, 26, 27, 28, 29, 30]
-                #   31,32,33,34,35,36,37,38,39,40]
-        len_list = len(self_list)
+        self.lent = len(self.questionData)
         i=1
-        for y in range(1, self.lent):
-            # for t in range(self.lent):
-            self.button = QPushButton(f'{y}')
+        for y in range(self.lent):
+            orgLen = y+1
+            self.button = QPushButton(f'{orgLen}')
             self.button.clicked.connect(partial(self.check, i))
-            self.layoutbutton.addWidget(self.button, 0, y)
+
+            self.button.setStyleSheet("QPushButton {background: blue}"
+                                                "QPushButton:Hover {background: yellow;}"
+                                                "QPushButton:Pressed {background: red}")
+            self.layoutbutton.addWidget(self.button, 0, orgLen+1)
             i+=1
             if i == self.lent:break
 
@@ -580,9 +584,10 @@ class Attendance(QMainWindow):
 
 
     def check(self, i):
+        self.qno=i
         try:
 
-            diclist = self.x[i]
+            diclist = self.questionData[i]
             a = "option1"
             b = "option2"
             c = "option3"
@@ -594,7 +599,7 @@ class Attendance(QMainWindow):
             D = f'(D){diclist[d]}'
             self.id = 'id'
             z = 'question'
-            size = len(self.x)-1
+            size = len(self.questionData)-1
 
             self.countlabel.setText(f'{diclist[self.id]}/{size}')
             ls = f'Question {diclist[self.id]} \n \n {diclist[z]}'
@@ -603,28 +608,10 @@ class Attendance(QMainWindow):
             self.radiobtn2.setText(B)
             self.radiobtn3.setText(C)
             self.radiobtn4.setText(D)
-            if self.qno == self.qno:
-
-                self.button.setStyleSheet('QPushButton'
-                                                '{'
-                                                'background: ;'
-                                                'color: #fff;'
-                                                '}'
-                                                'QPushButton::Hover'
-                                                '{'
-                                                'background: yellow;'
-                                                'color: #333;'
-                                                '}'
-                                                'QPushButton::Pressed'
-                                                '{'
-                                                'background: #ddd;'
-                                                'color: #333;'
-                                                '}'
-                                                'QPushButton::Disabled'
-                                                '{'
-                                                'background: #ddd;'
-                                                'color: #333;'
-                                                '}')
+            # if self.qno == self.qno:
+            #     self.button.setStyleSheet("QPushButton {background: blue}"
+            #                                     # "QPushButton:Hover {background: yellow;}"
+            #                               "QPushButton:Pressed {background: red}")
 
         except IndexError:
             print('End of question')
@@ -633,7 +620,7 @@ class Attendance(QMainWindow):
     def answer(self):
         
         self.qno+=1
-        diclist = self.x[self.qno]
+        diclist = self.questionData[self.qno]
         a = "option1"
         b = "option2"
         c = "option3"
@@ -645,7 +632,7 @@ class Attendance(QMainWindow):
         D = f'(D){diclist[d]}'
         self.id = 'id'
         z = 'question'
-        size = len(self.x)-1
+        size = len(self.questionData)-1
 
         self.countlabel.setText(f'{diclist[self.id]}/{size}')
         ls = f'Question {diclist[self.id]} \n {diclist[z]}'
@@ -655,23 +642,18 @@ class Attendance(QMainWindow):
         self.radiobtn3.setText(C)
         self.radiobtn4.setText(D)
             
-        self.radiobtn.setCheckable(False)
-        self.radiobtn2.setCheckable(False)
-        self.radiobtn3.setCheckable(False)
-        self.radiobtn4.setCheckable(False)
-
-        
-
-    def increase(self, qno=0):
-        if qno:
-            qno+=1
-        print(qno)
+        # self.radiobtn.setCheckable(False)
+        # self.radiobtn2.setCheckable(False)
+        # self.radiobtn3.setCheckable(False)
+        # self.radiobtn4.setCheckable(False)
 
 
     def next_btn(self):
         self.qno+=1
-        # print(self.qno)
-        diclist = self.x[self.qno]
+        if self.qno == 0:
+            self.qno = +1
+        diclist = self.questionData[self.qno]
+
         a = "option1"
         b = "option2"
         c = "option3"
@@ -692,11 +674,17 @@ class Attendance(QMainWindow):
         self.radiobtn3.setText(C)
         self.radiobtn4.setText(D)
 
+        self.radiobtn.setCheckable(False)
+        self.radiobtn2.setCheckable(False)
+        self.radiobtn3.setCheckable(False)
+        self.radiobtn4.setCheckable(False)
+
     def previous_btn(self):
-        if self.increase(self.qno):
-            print('y')
         self.qno-=1
-        diclist = self.x[self.qno]
+        if self.qno == 0:
+            self.qno = -1
+
+        diclist = self.questionData[self.qno]
         a = "option1"
         b = "option2"
         c = "option3"
@@ -722,13 +710,14 @@ class Attendance(QMainWindow):
     
 
     def jsonfile(self, i):
-        self.radiobtn.setChecked(False)
-        self.radiobtn2.setChecked(False)
-        self.radiobtn3.setChecked(False)
-        self.radiobtn4.setChecked(False)
-        # print(len(self.x))
+        # self.radiobtn.setChecked(False)
+        # self.radiobtn2.setChecked(False)
+        # self.radiobtn3.setChecked(False)
+        # self.radiobtn4.setChecked(False)
+        # print(len(self.questionData))
         # # try:    
-        while self.qno < len(self.x):
+        # while self.qno < len(self.questionData):
+        try:
             # self.qno+=1
 
             print(f'{self.label.text()}')
@@ -736,6 +725,8 @@ class Attendance(QMainWindow):
 
                 if self.radiobtn.isChecked() == True: 
                     print(self.radiobtn.text())
+                    self.questionData.update({"answer": self.radiobtn.text()})
+                    c = self.questionData.keys()
                     with open('exam.txt', 'a') as self.mykey:
                         self.key = self.mykey.write(f'{self.label.text()} \n {self.radiobtn.text()} \n')
 
@@ -757,12 +748,13 @@ class Attendance(QMainWindow):
                     with open('exam.txt', 'a') as self.mykey:
                         self.key = self.mykey.write(f'{self.label.text()} \n {self.radiobtn4.text()} \n')
 
-            self.answer()
+            # self.answer()
             self.radiobtn.setCheckable(True)
             self.radiobtn2.setCheckable(True)
             self.radiobtn3.setCheckable(True)
             self.radiobtn4.setCheckable(True)
-            break
+        except:
+            print()
         
         # except IndexError:
         #     print('Congratulation... You are done with your Quiz')
@@ -776,17 +768,18 @@ class LogForm(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.left =140
-        self.top =600
-        self.width =400
-        self.height =329
+        self.top=80 
+        self.left=20
+        self.width = 1365
+        self.height=600
         # self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
 
         # self.setWindowModality(Qt.ApplicationModal)
-        self.setFixedSize(self.width, self.height)
+        # self.setFixedSize(self.width, self.height)
         
-        self.setStyleSheet("background: #fff;")
+        # self.setStyleSheet("background: #000;")
 
+        self.setStyleSheet("background-image: url(img/lib1.jpg);")
         self.setGeometry(self.top, self.left, self.width, self.height)
         self.setWindowTitle('Login Form')
 
@@ -807,19 +800,21 @@ class LogForm(QWidget):
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.groupBox = QtWidgets.QGroupBox(self)
-        self.groupBox.setGeometry(QtCore.QRect(30, 70, 331, 231))
+        self.groupBox.setGeometry(QtCore.QRect(550, 150, 331, 231))
         self.groupBox.setStyleSheet('background: #f2f7d9')
         self.groupBox.setObjectName("groupBox")
         
         self.username = QtWidgets.QLineEdit(self.groupBox)
         self.username.setGeometry(QtCore.QRect(10, 30, 311, 36))
         self.username.setObjectName("username")
+        self.username.setPlaceholderText("username")
         self.username.setFont(QtGui.QFont('Arial', 13))
         self.username.setStyleSheet('background: #fff')
 
         self.password = QtWidgets.QLineEdit(self.groupBox)
         self.password.setGeometry(QtCore.QRect(10, 80, 311, 36))
         self.password.setObjectName("password")
+        self.password.setPlaceholderText("password")
         self.password.setFont(QtGui.QFont('Arial', 13))
         self.password.setStyleSheet('background: #fff')
 
@@ -830,14 +825,14 @@ class LogForm(QWidget):
         self.pushButton.clicked.connect(self.closeReg)
         
         self.progressBar = QtWidgets.QProgressBar(self)
-        self.progressBar.setGeometry(QtCore.QRect(30, 300, 330, 8))
+        self.progressBar.setGeometry(QtCore.QRect(550, 376, 330, 8))
         self.progressBar.setProperty("value", 24)
         self.progressBar.setObjectName("progressBar")
 
         self.pushButton.setText("Submit")
         self.label.setText("Gold")
         self.label_2.setText("Concept Computer & ICT Accademy")
-        self.groupBox.setTitle("Login")
+        self.groupBox.setTitle("Login Form")
 
     def closeReg(self):
         if self.username.text() == 'joe' and self.password.text() == '123':
@@ -848,12 +843,23 @@ class LogForm(QWidget):
                 self.progressBar.setValue(i)
             self.close()
 
-            window = Attendance()
+            wLog = LogForm()
+            wLog.close()
+
+            window = SchoolCBTMain()
             window.username.setText(f'Welcome {self.username.text()}')
             window.show()
 
-            window22 = Window_Form()
-            window22.hide()
+            # windowForms = Window_Form()
+            # windowForms.close()
+
+            # wReg = RegForm()
+            # wReg.close()
+
+            
+
+
+            
 
             
             # window.username.setText(self.win.username.text())
@@ -933,7 +939,7 @@ class RegForm(QWidget):
         window = RegForm()
         window.close()
 
-        window = Attendance()
+        window = SchoolCBTMain()
         window.show()
 
 
@@ -1018,10 +1024,10 @@ class Window_Form(QWidget):
 
 if __name__=='__main__':
     app = QApplication(sys.argv)
-    # window = Attendance()
-    # window.show()
+    window = SchoolCBTMain()
+    window.show()
 
     
-    win = Window_Form()
-    win.show()
-    sys.exit(app.exec_())
+    # win = LogForm()
+    # win.show()
+    sys.exit(app.exec_())  
