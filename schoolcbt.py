@@ -44,17 +44,22 @@ class SchoolCBTMain(QtWidgets.QWidget):
     def WindowApp(self):
         self.setGeometry(self.top, self.left, self.width, self.height)
         self.setWindowTitle('Gold Concept CBT App')
-        # self.setStyleSheet('background: ;')
-        self.conn = sqlite3.connect('gold_concept.db')
+        self.setStyleSheet('background: ;')
+        self.conn = sqlite3.connect('gold_concept3.db')
         self.cursors = self.conn.cursor()
         # print(' database open successfully')
         # confirmed = input('Search: ')
-        # self.cursor = self.conn.execute("SELECT questionid, question, option1, option2, option3, option4 FROM gold_concept")
-        # # for row in cursor:
-        # #     self.questionData = row
+        # self.cursor = self.conn.execute("SELECT questionid, question, option1, option2, option3, option4, answer FROM gold_concept")
+        # for row in self.cursor:
+        #     self.questionData = row
+        #     print(f'{row[0]}, {row[1]},{row[2]}, {row[3]}, {row[4]}, {row[5]},{row[6]}')
+        # self.cursor = "SELECT * gold_concept"
+        # self.result = self.conn.execute(self.cursor)
         
-        self.group_btn = QtWidgets.QButtonGroup()
-        self.group_radiobtn = QtWidgets.QButtonGroup()
+        
+        self.group_btn = QtWidgets.QButtonGroup(self)
+        self.group_radiobtn = QtWidgets.QButtonGroup(self)
+        # self.group_radiobtn.buttonClicked[int].connect(self.update)
 
         with open("data.json") as f:
             self.questionData = json.load(f)
@@ -132,48 +137,24 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.logolabel2 = QLabel(self.groupprofile)
         self.logolabel2.setFont(QtGui.QFont('Dyuthi',12,))
         self.logolabel2.setText('Concept Computer & ICT Academy')
-        # self.logolabel2.setAlignment(Qt.AlignCenter)
         self.logolabel2.setGeometry(10, 90, 400, 60)
         self.logolabel2.setStyleSheet('color: #fff;')
-        # self.vlayout2.addWidget(self.logolabel2)
-        # self.group2.setLayout(self.logolabel)
-
-        
-
-        # self.group2 = QGroupBox(self)
-        # self.group2.setGeometry(260, 30, 1100, 400)
-        # self.group2.setStyleSheet('background: #ddd')
-
 
         self.forwardbtn = QtWidgets.QPushButton(self)
         self.forwardbtn.setGeometry(QtCore.QRect(800, 432, 80, 36))
-        self.forwardbtn.setText(">")
+        self.forwardbtn.setText("Next")
         self.forwardbtn.setFont(QtGui.QFont('consola',12,))
-        self.forwardbtn.setStyleSheet('background: green; color: #fff')
+        # self.forwardbtn.setStyleSheet('background: green; color: #fff')
         self.forwardbtn.clicked.connect(self.next_btn)
-        # self.vlayout.addWidget(self.forwardbtn)
 
-
-        self.forwardlabel = QLabel(self)
-        self.forwardlabel.setFont(QtGui.QFont('consola',12,))
-        self.forwardlabel.setText('Next')
-        self.forwardlabel.setAlignment(Qt.AlignCenter)
-        self.forwardlabel.setGeometry(740, 460, 200, 36)
+      
 
         self.backwardbtn = QtWidgets.QPushButton(self)
         self.backwardbtn.setGeometry(QtCore.QRect(700, 432, 80, 36))
-        self.backwardbtn.setText("<")
+        self.backwardbtn.setText("Previous")
         self.backwardbtn.setFont(QtGui.QFont('consola',12,))
-        self.backwardbtn.setStyleSheet('background: green; color: #fff')
+        # self.backwardbtn.setStyleSheet('background: green; color: #fff')
         self.backwardbtn.clicked.connect(self.previous_btn)
-        # self.vlayout.addWidget(self.backwardbtn)
-
-        self.backwardlabel = QLabel(self)
-        self.backwardlabel.setFont(QtGui.QFont('consola',12,))
-        self.backwardlabel.setText('Previous')
-        self.backwardlabel.setAlignment(Qt.AlignCenter)
-        self.backwardlabel.setGeometry(640, 460, 200, 36)
-
 
 
         self.group2 = QGroupBox(self)
@@ -183,7 +164,6 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.vlayout = QVBoxLayout(self)
         self.vlayout.addStretch(0)
         self.group2.setLayout(self.vlayout)
-
 
         self.username = QLabel(self.group2)
         self.username.setFont(QtGui.QFont('consola',12,))
@@ -197,8 +177,6 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.pixmap = QPixmap("user.png")
         self.imagelabel.setPixmap(self.pixmap)
         self.imagelabel.setGeometry(645, 8, 30, 30)
-        # self.vlayout2.addWidget(self.imagelabel)
-
 
         self.startquiz = QtWidgets.QPushButton(self.group2)
         self.startquiz.setGeometry(5, 8, 101, 36)
@@ -206,13 +184,11 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.startquiz.setStyleSheet('background: green; color: #fff')
         self.startquiz.clicked.connect(self.showDialog)
 
-
         self.starttimequizframe = QFrame(self.group2)
         self.starttimequizframe.setGeometry(990, 8, 101, 120)
         self.starttimequizframe.setStyleSheet('background: #e8ffe8; color: #fff')
 
         self.timelogo = QLabel(self.starttimequizframe)
-        # self.timelogo.setAlignment(Qt.AlignCenter)
         self.pixmap = QPixmap("alert_32x32.png")
         self.timelogo.setPixmap(self.pixmap)
         self.timelogo.setGeometry(35, 1, 101, 36)
@@ -222,20 +198,14 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.starttimequiz.setAlignment(Qt.AlignCenter)
         self.starttimequiz.setGeometry(0, 50, 101, 80)
         self.starttimequiz.setStyleSheet('background: #333; color: #fff')
-        # self.vlayout.addWidget(self.starttimequiz)
-
 
         self.countlabel = QLabel(self.group2)
         self.countlabel.setFont(QtGui.QFont('consola',12,))
         # self.countlabel.setText('CBT Exam')
         self.countlabel.setAlignment(Qt.AlignCenter)
         self.countlabel.setGeometry(450, 8, 60, 36)
-        # self.countlabel.setStyleSheet('background: rgb(46, 52, 54);')
-        # self.vlayout.addWidget(self.countlabel)
-
-
+       
         self.questionLabel = QtWidgets.QLabel(self)
-        # self.questionLabel.setGeometry(1, 1, 800, 60)
         self.questionLabel.setFont(QtGui.QFont('aakar', 14))
         self.questionLabel.setStyleSheet('background: #f7fcf5')
         self.vlayout.addWidget(self.questionLabel)
@@ -243,43 +213,31 @@ class SchoolCBTMain(QtWidgets.QWidget):
 
         self.radiobtn = QRadioButton(self)
         self.radiobtn.setFont(QtGui.QFont('aakar', 13))
-        # self.radiobtn.setStyleSheet('background: #f7fcf5')
-        # self.radiobtn.clicked.connect(self.jsonfile)
         self.radiobtn.toggled.connect(self.update)
-        self.radiobtn.setChecked(False)
-        # self.radiobtn.setGeometry(540, 420, 200, 36)
         self.vlayout.addWidget(self.radiobtn)
 
         self.radiobtn2 = QRadioButton(self)
         self.radiobtn2.setFont(QtGui.QFont('aakar', 13))
-        self.radiobtn2.setChecked(False)
-        # self.radiobtn2.setStyleSheet('background: #f7fcf5')
-        # self.radiobtn2.clicked.connect(self.jsonfile)
         self.radiobtn2.toggled.connect(self.update)
         self.vlayout.addWidget(self.radiobtn2)
 
         self.radiobtn3 = QRadioButton( self)
         self.radiobtn3.setFont(QtGui.QFont('aakar', 13))
-        self.radiobtn3.setChecked(False)
-        # self.radiobtn3.clicked.connect(self.jsonfile)
         self.radiobtn3.toggled.connect(self.update)
-        # self.radiobtn3.setStyleSheet('background: #f7fcf5')
         self.vlayout.addWidget(self.radiobtn3)
 
         self.radiobtn4 = QRadioButton( self)
         self.radiobtn4.setFont(QtGui.QFont('aakar', 13))
-        self.radiobtn4.setChecked(False)
-        # self.radiobtn4.clicked.connect(self.jsonfile)
         self.radiobtn4.toggled.connect(self.update)
-        # self.radiobtn4.setStyleSheet('background: #f7fcf5')
         self.vlayout.addWidget(self.radiobtn4)
 
 
         self.dic = self.questionData[1]
 
         self.startTimer()
-        self.check(i=1)
-        self.initalizingQuestion(self)
+        self.initQustions(i=1)
+        # self.jsonfile()
+        # self.initalizingQuestion()
         # self.jsonfile(0)
         # self.previous_btn()
 
@@ -288,7 +246,6 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.groupbutton.setTitle("Quick Navigation")
         self.groupbutton.setFont(QtGui.QFont('consola',15,))
         self.groupbutton.setGeometry(260, 500, 1100, 250)
-        # self.groupbutton.setStyleSheet('background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0.509, y2:0, stop:0 rgba(8, 120, 48, 255), stop:1 rgba(0, 168, 119, 255));; color: #fff;')
         self.layoutbutton = QGridLayout(self)
         # self.layoutbutton.addStrech(1)
         self.groupbutton.setLayout(self.layoutbutton)
@@ -296,68 +253,50 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.lent = len(self.questionData)
         self.g_i=1
       
-        self.group_btn.buttonClicked[int].connect(self.slot)
-    
+        
+
         self.buttonlist = int
         for self.buttonlist in range(self.lent):
             self.orgLen = self.buttonlist+1
             self.button = Button(f'{self.orgLen}')
-            self.button.clicked.connect(partial(self.check, self.g_i))
+            self.button.clicked.connect(partial(self.initQustions, self.g_i))
             self.button.setCheckable(True)
-            # self.button.setStyleSheet("QPushButton {background: #; color: #fff}""QPushButton:Hover {background: yellow;}")
-            # if self.buttonlist == 0:
-                # self.button.setChecked(True)
+            # self.button.setStyleSheet("QPushButton {background: red; color: #fff}""QPushButton:Hover {background: yellow;}")
+            if self.orgLen == 1:
+                self.button.setCheckable(True)
+                self.button.setChecked(True)
                 # self.button.setStyleSheet("QPushButton {background: green; color: #fff;}")
-            self.group_radiobtn.addButton(self.button, self.orgLen)
+            self.group_btn.addButton(self.button, self.orgLen)
             self.layoutbutton.addWidget(self.button, 0, self.orgLen+1)
             self.g_i+=1
             if self.g_i == self.lent:break
 
             # ////////////////////Radio Button////////////////////////
-    def initalizingQuestion(self, objs):
-            self.ch = ["A:", "B:", "C:", "D:"]
-            self.opt = ["option1","option2","option3","option4"]
-            # self.qradio = [self.radiobtn, self.radiobtn2, self.radiobtn3, self.radiobtn4]
 
-            self.radiobtn.setText(f'{self.ch[0]} {self.dic[self.opt[0]]}')
-            self.radiobtn2.setText(f'{self.ch[1]} {self.dic[self.opt[1]]}')
-            self.radiobtn3.setText(f'{self.ch[2]} {self.dic[self.opt[2]]}')
-            self.radiobtn4.setText(f'{self.ch[3]}{self.dic[self.opt[3]]}')
-
-            for btn in self.group_btn.buttons():
-                if btn is self.group_btn.button(objs):
-                    if btn ==
-                    btn.setCheckable(True)
-                    btn.setStyleSheet("QPushButton {background: green; color: #fff;}" "QPushButton:Hover {background: yellow;}")
-            
-                
-        
-            # ############################################
-
-    def slot(self, objs):
-        for btn in self.group_btn.buttons():
-            if btn is self.group_btn.button(objs):
-                btn.setStyleSheet("QPushButton {background: green; color: #fff;}" "QPushButton:Hover {background: yellow;}")
-           
-
-    def save_my_data(self, question, option1, option2, option3, option4, answer):
-        self.query = "INSERT INTO gold_concept VALUES (?,?,?,?,?,?)"
-        self.params = (None, question, option1, option2, option3, option4, answer)
-        self.cursors.execute(self.query, self.params)
+    def save_my_data(self, matric_no, choosing, answer):
+        # self.query = "INSERT INTO gold_concept() VALUES (?,?,?,?,?,?)"
+        # self.params = (None, question, option1, option2, option3, option4, answer)
+        # self.cursors.execute(self.query, self.params)
+        # self.conn.commit()
+        self.conn.execute(
+                 "INSERT INTO exam (matric_no, choosing, answer) VALUES ('" + matric_no + "', '" + choosing + "', '" + answer + "')")
         self.conn.commit()
+    def querryUserData(self):
+        self.cursor = "SELECT * FROM exam"
+        self.result = self.conn.execute(self.cursor)
+        for i in self.result:
+            print(i)
 
     def showDialog(self):
         reply = QMessageBox.question(self, 'Information', """ Welcome to GOLD Concept CBT Exam
         You Are about to Start
         Click Yes to (start) and No to (Ignor) """, QMessageBox.Yes | QMessageBox.No)
         if reply == QMessageBox.Yes:
-            self.jsonfile(1)
             self.time_left_int = DURATION_INT
             self.myTimer.timeout.connect(self.timerTimeout)
             self.myTimer.start(1000)
         else:
             pass
-            
 
     def startTimer(self):
         self.time_left_int = DURATION_INT
@@ -376,29 +315,36 @@ class SchoolCBTMain(QtWidgets.QWidget):
         minsec = secs_to_minsec(self.time_left_int)
         self.starttimequiz.setText(minsec)
 
-
-
-    def check(self, i):
+    def initQustions(self, i):
         self.qno=i
+        self.ch = ["A:", "B:", "C:", "D:"]
+        self.opt = ["option1","option2","option3","option4"]
         try:
-                
                 self.diclist = self.questionData[i]
-           
                 self.id = 'id'
                 z = 'question'
                 size = len(self.questionData)-1
-
                 self.countlabel.setText(f'{self.diclist[self.id]}/{size}')
                 ls = f'Question {self.diclist[self.id]} \n \n {self.diclist[z]}'
                 self.questionLabel.setText(ls)
+                self.radiobtn.setText(f'{self.ch[0]} {self.diclist[self.opt[0]]}')
+                self.radiobtn2.setText(f'{self.ch[1]} {self.diclist[self.opt[1]]}')
+                self.radiobtn3.setText(f'{self.ch[2]} {self.diclist[self.opt[2]]}')
+                self.radiobtn4.setText(f'{self.ch[3]} {self.diclist[self.opt[3]]}')
+
+                # ////////////
+               
+                if self.qno == 1:
+                    self.backwardbtn.setDisabled(True)
+                    # //////
+                self.setCheckRadioBtnOff_on()
   
-           
-           
         except IndexError:
             print('End of question')
 
 
     def next_btn(self):
+        self.setCheckRadioBtnOff_on()
         self.qno+=1
         if self.qno == 0:
             self.qno = +1
@@ -414,24 +360,31 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.ch = ["A:", "B:", "C:", "D:"]
         self.opt = ["option1","option2","option3","option4"]
 
+
         self.radiobtn.setText(f'{self.ch[0]} {self.diclist[self.opt[0]]}')
         self.radiobtn2.setText(f'{self.ch[1]} {self.diclist[self.opt[1]]}')
         self.radiobtn3.setText(f'{self.ch[2]} {self.diclist[self.opt[2]]}')
         self.radiobtn4.setText(f'{self.ch[3]} {self.diclist[self.opt[3]]}')
+        # ///////////
+
+        for self.btn in self.group_btn.buttons():
+            if self.btn is self.group_btn.button(self.qno):
+                self.btn.setCheckable(True)
+                self.btn.setChecked(True)
+            elif self.btn is self.group_btn.button(self.qno):
+                self.btn.setCheckable(True)
+                self.btn.setChecked(True)
+                # //////////////
+        for self.rbtn in self.group_radiobtn.buttons():
+            if self.rbtn is self.group_radiobtn.button(0):
+                self.rbtn.setCheckable(False)
+                self.rbtn.setChecked(False)
 
 
-        vbox2 = QtWidgets.QVBoxLayout(self)
-        vbox2.addLayout(self.vlayout)
-        # vbox2.addWidget(stackedwidget2)
-        self.group2.setLayout(vbox2)
-
-    def clear(self):
-      item = self.layout.itemAt(2)
-      if item != None :
-          widget = item.widget()
-          if widget != None:
-              self.layout.removeWidget(widget)
-              widget.deleteLater() 
+        if self.qno > 1:
+            self.backwardbtn.setEnabled(True)
+        if self.qno == 30:
+            self.forwardbtn.setDisabled(True)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            #  .                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
     def previous_btn(self):
         self.qno-=1
@@ -453,17 +406,46 @@ class SchoolCBTMain(QtWidgets.QWidget):
         self.radiobtn2.setText(f'{self.ch[1]} {self.diclist[self.opt[1]]}')
         self.radiobtn3.setText(f'{self.ch[2]} {self.diclist[self.opt[2]]}')
         self.radiobtn4.setText(f'{self.ch[3]} {self.diclist[self.opt[3]]}')
+    #   //////
+        for self.btn in self.group_btn.buttons():
+            if self.btn is self.group_btn.button(self.qno):
+                # self.btn.setStyleSheet("QPushButton {background: green; color: #fff;}")
+                self.btn.setCheckable(True)
+                self.btn.setChecked(True)
+        # ////
+        if self.qno < 30:
+            self.forwardbtn.setEnabled(True)
+        if self.qno <= 1:
+            self.backwardbtn.setDisabled(True)
 
 
-    def update(self):
-        # get the radio button the send the signal
+    def update(self, i):
         rb = self.sender()
-
-        # check if the radio button is checked
+        # initQustions if the radio button is checked
+        self.dics= self.questionData[self.qno]
         if rb.isChecked():
-            print(f'You selected {rb.text()}')
+            # for x in self.dics:
+            print(f'You selected {rb.text()}, gggggggggg{self.diclist["answer"]}')
+            # self.save_my_data("NAS00899", rb.text(), self.diclist["answer"] )
+            for self.btn in self.group_btn.buttons():
+                    if self.btn is self.group_btn.button(self.qno):
+                        self.btn.setStyleSheet("QPushButton {background: green; color: #fff;}")
+                        # self.btn.setCheckable(True)
+                        # self.btn.setChecked(True)
 
-    def jsonfile(self, i):
+    def setCheckRadioBtnOff_on(self):
+
+        self.radiobtn.setCheckable(False)
+        self.radiobtn2.setCheckable(False)
+        self.radiobtn3.setCheckable(False)
+        self.radiobtn4.setCheckable(False)
+ 
+        self.radiobtn.setCheckable(True)
+        self.radiobtn2.setCheckable(True)
+        self.radiobtn3.setCheckable(True)
+        self.radiobtn4.setCheckable(True)
+
+    def jsonfile(self):
         try:
             # self.qno+=1
 
@@ -476,6 +458,14 @@ class SchoolCBTMain(QtWidgets.QWidget):
                     c = self.questionData.keys()
                     with open('exam.txt', 'a') as self.mykey:
                         self.key = self.mykey.write(f'{self.questionLabel.text()} \n {self.radiobtn.text()} \n')
+                    # 
+                    for self.btn in self.group_btn.buttons():
+                        print(self.qno)
+                        if self.btn is self.group_btn.button(self.qno):
+                            self.btn.setStyleSheet("QPushButton {background: green; color: #fff;}")
+                            self.btn.setCheckable(True)
+                            self.btn.setChecked(True)
+
 
             if self.radiobtn2.text() == self.radiobtn2.text():
                 if self.radiobtn2.isChecked() == True:

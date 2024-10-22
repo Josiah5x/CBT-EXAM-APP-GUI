@@ -13,37 +13,41 @@
                     "option2": "Table",
                     "option3": "Menu",
                     "option4": "Both (a) and (b)",
-                    "answer":""
+                    "answer":"Menu"
                 },
                 {   "id": 2,
-                    "question": "Which is not in Ms Word Office",
+                    "question": "Which of this is not found in Ms Word Office style",
                     "option1": "Italic",
                     "option2": "Magic Tool",
                     "option3": "Font",
-                    "option4": "Bold"
+                    "option4": "Bold",
+                    "answer":"Magic Tool"
                 },
                 {   "id": 3,
-                    "question": "____ Cannot be used to work in Ms Word Office",
-                    "option1": "Joystick",
-                    "option2": "Scanner",
-                    "option3": "Light Pen",
-                    "option4": "Mouse"
+                    "question": "____ are pieces of component inside the CPU except one",
+                    "option1": "Hard Drive",
+                    "option2": "Monitor",
+                    "option3": "RAM",
+                    "option4": "CMOS Batery",
+                    "answer":"Monitor"
                     
                 },
                 {
                     "id": 4,
-                    "question": "Which is not an adition of MS Word?",
-                    "option1": "MS Word 2003",
-                    "option2": "MS Word 2007",
-                    "option3": "MS Word 2010",
-                    "option4": "MS Word 1020"
+                    "question": "MS Powerpoint is use for ___?",
+                    "option1": "Graphic Design",
+                    "option2": "Presentation",
+                    "option3": "Video Edit",
+                    "option4": "All of the above",
+                    "answer":"Presentation"
                 },
                 {   "id": 5,
-                    "question": "Microsoft Word is ____ software",
-                    "option1": "Application",
+                    "question": "Microsoft Word is ___ software",
+                    "option1": "Word Processor",
                     "option2": "Compiler",
                     "option3": "System",
-                    "option4": "Programming"
+                    "option4": "Programming",
+                    "answer":"Word Processor"
                 },
 
                 {   "id": 6,

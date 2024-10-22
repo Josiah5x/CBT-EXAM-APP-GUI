@@ -7,7 +7,7 @@ from PyQt5 import QtGui
 from PyQt5.QtGui import QPixmap
 from datetime import datetime
 from time import strftime
-import mysql.connector
+# import mysql.connector
 import json
 import jsonfile
 import sqlite3
@@ -44,249 +44,11 @@ class SchoolCBTMain(QMainWindow):
         conn = sqlite3.connect('gold_concept.db')
         print(' database open successfully')
         # confirmed = input('Search: ')
-        cursor = conn.execute("SELECT id, question, option1, option2, option3, option4 FROM gold_concept")
+        # cursor = conn.execute("SELECT id, question, option1, option2, option3, option4 FROM gold_concept")
         # for row in cursor:
         #     self.questionData = row
         
-        # self.questionData = [
-        #         {   "id": 0,
-        #             "question": "Jumb and go to number",
-        #             "option1": "---",
-        #             "option2": "----",
-        #             "option3": "------",
-        #             "option4": "---------",
-        #         },
-        #         {   "id": 1,
-        #             "question": "Formatting is perform on",
-        #             "option1": "Text",
-        #             "option2": "Table",
-        #             "option3": "Menu",
-        #             "option4": "Both (a) and (b)"
-        #         },
-        #         {   "id": 2,
-        #             "question": "Which is not in Ms Word Office",
-        #             "option1": "Italic",
-        #             "option2": "Magic Tool",
-        #             "option3": "Font",
-        #             "option4": "Bold",
-        #         },
-        #         {   "id": 3,
-        #             "question": "____ Cannot be used to work in Ms Word Office",
-        #             "option1": "Joystick",
-        #             "option2": "Scanner",
-        #             "option3": "Light Pen",
-        #             "option4": "Mouse",
-                    
-        #         },
-        #         {
-        #             "id": 4,
-        #             "question": "Which is not an adition of MS Word?",
-        #             "option1": "MS Word 2003",
-        #             "option2": "MS Word 2007",
-        #             "option3": "MS Word 2010",
-        #             "option4": "MS Word 1020",
-        #         },
-        #         {   "id": 5,
-        #             "question": "Microsoft Word is ____ software",
-        #             "option1": "Application",
-        #             "option2": "Compiler",
-        #             "option3": "System",
-        #             "option4": "Programming"
-        #         },
-
-        #         {   "id": 6,
-        #             "question": "What is the blank space outside the printing command",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 7,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 8,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 9,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 10,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 11,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 12,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-
-        #         {   "id": 13,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 14,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 15,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 16,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 17,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 18,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 19,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 20,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 21,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 22,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 23,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 24,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 25,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 26,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 27,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 28,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 29,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-        #         {   "id": 30,
-        #             "question": "",
-        #             "option1": "",
-        #             "option2": "",
-        #             "option3": "",
-        #             "option4": ""
-        #         },
-                # {   "id": 31,
-                #     "question": "",
-                #     "option1": "",
-                #     "option2": "",
-                #     "option3": "",
-                #     "option4": ""
-                # },
-                # {   "id": 32,
-                #     "question": "",
-                #     "option1": "",
-                #     "option2": "",
-                #     "option3": "",
-                #     "option4": ""
-                # },
-            # ]
-
-        # f = open("data.json")
+       
         with open("data.json") as f:
             self.questionData = json.load(f)
 
@@ -478,7 +240,8 @@ class SchoolCBTMain(QMainWindow):
         self.radiobtn = QRadioButton(self)
         self.radiobtn.setFont(QtGui.QFont('aakar', 13))
         self.radiobtn.setStyleSheet('background: #f7fcf5')
-        self.radiobtn.clicked.connect(self.jsonfile)
+        # self.radiobtn.clicked.connect(self.jsonfile)
+        self.radiobtn.toggled.connect(self.update)
         self.radiobtn.setChecked(False)
         # self.radiobtn.setGeometry(540, 420, 200, 36)
         self.vlayout.addWidget(self.radiobtn)
@@ -487,20 +250,23 @@ class SchoolCBTMain(QMainWindow):
         self.radiobtn2.setFont(QtGui.QFont('aakar', 13))
         self.radiobtn2.setChecked(False)
         self.radiobtn2.setStyleSheet('background: #f7fcf5')
-        self.radiobtn2.clicked.connect(self.jsonfile)
+        # self.radiobtn2.clicked.connect(self.jsonfile)
+        self.radiobtn2.toggled.connect(self.update)
         self.vlayout.addWidget(self.radiobtn2)
 
         self.radiobtn3 = QRadioButton( self)
         self.radiobtn3.setFont(QtGui.QFont('aakar', 13))
         self.radiobtn3.setChecked(False)
-        self.radiobtn3.clicked.connect(self.jsonfile)
+        # self.radiobtn3.clicked.connect(self.jsonfile)
+        self.radiobtn3.toggled.connect(self.update)
         self.radiobtn3.setStyleSheet('background: #f7fcf5')
         self.vlayout.addWidget(self.radiobtn3)
 
         self.radiobtn4 = QRadioButton( self)
         self.radiobtn4.setFont(QtGui.QFont('aakar', 13))
         self.radiobtn4.setChecked(False)
-        self.radiobtn4.clicked.connect(self.jsonfile)
+        # self.radiobtn4.clicked.connect(self.jsonfile)
+        self.radiobtn4.toggled.connect(self.update)
         self.radiobtn4.setStyleSheet('background: #f7fcf5')
         self.vlayout.addWidget(self.radiobtn4)
 
@@ -529,17 +295,18 @@ class SchoolCBTMain(QMainWindow):
         
         self.lent = len(self.questionData)
         i=1
-        for y in range(self.lent):
-            orgLen = y+1
+        for buttonlist in range(self.lent):
+            orgLen = buttonlist+1
             self.button = QPushButton(f'{orgLen}')
+          
             self.button.clicked.connect(partial(self.check, i))
-
-            self.button.setStyleSheet("QPushButton {background: blue}"
-                                                "QPushButton:Hover {background: yellow;}"
-                                                "QPushButton:Pressed {background: red}")
+            self.button.setStyleSheet("QPushButton {background: #fff}""QPushButton:Hover {background: yellow;}")
             self.layoutbutton.addWidget(self.button, 0, orgLen+1)
+            # if self.button == e.sender():
+            #     self.button.setStyleSheet("QPushButton {background: red}")
             i+=1
             if i == self.lent:break
+           
 
         # scroll = QScrollArea(self)
         # scroll.setWidget(self.groupbutton)
@@ -547,7 +314,11 @@ class SchoolCBTMain(QMainWindow):
         # scroll.setFixedWidth(200)
         
 
-
+    def slot(self, objs):
+        for btn in self.group2.buttons():
+            if btn is self.group_btn.button(objs):
+                btn.setStyleSheet("QPushButton {background: green; color: #fff;}" "QPushButton:Hover {background: yellow;}")
+           
 
     def showDialog(self):
         reply = QMessageBox.question(self, 'Information', """ Welcome to GOLD Concept CBT Exam
@@ -709,14 +480,15 @@ class SchoolCBTMain(QMainWindow):
 
     
 
+    def update(self):
+        # get the radio button the send the signal
+        rb = self.sender()
+
+        # check if the radio button is checked
+        if rb.isChecked():
+            print(f'You selected {rb.text()}')
+
     def jsonfile(self, i):
-        # self.radiobtn.setChecked(False)
-        # self.radiobtn2.setChecked(False)
-        # self.radiobtn3.setChecked(False)
-        # self.radiobtn4.setChecked(False)
-        # print(len(self.questionData))
-        # # try:    
-        # while self.qno < len(self.questionData):
         try:
             # self.qno+=1
 

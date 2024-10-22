@@ -5,13 +5,15 @@ QuestionJSON ="""[
                     "option2": "----",
                     "option3": "------",
                     "option4": "---------",
+                    "answer":  "Menu"
                 },
                 {   "id": 1,
                     "question": "Formatting is perform on",
                     "option1": "Text",
                     "option2": "Table",
                     "option3": "Menu",
-                    "option4": "Both (a) and (b)"
+                    "option4": "Both (a) and (b)",
+                    "answer":  "Menu"
                 },
                 {   "id": 2,
                     "question": "Which is not in Ms Word Office",
